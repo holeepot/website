@@ -1,0 +1,641 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Wren Halloran — Artist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,300;12..96,500;12..96,600;12..96,700;12..96,800&family=Space+Mono:wght@400;700&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --red:#C6362A;
+    --red-dark:#A32B21;
+    --lime:#CBDB2A;
+    --lime-dark:#aebd1f;
+    --cream:#F5F2E8;
+    --ink:#17140D;
+    --stone:#8B8677;
+    --stone-light:#c9c4b6;
+    --white:#FFFFFF;
+    --serif:'Bricolage Grotesque', sans-serif;
+    --mono:'Space Mono', monospace;
+    --sans:'Inter', sans-serif;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--cream);
+    color:var(--ink);
+    font-family:var(--sans);
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  a{color:inherit;text-decoration:none;}
+  ::selection{background:var(--ink);color:var(--cream);}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; transition-duration:0.01ms !important;}
+  }
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed;
+    top:0;left:0;right:0;
+    z-index:100;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 32px;
+    mix-blend-mode:difference;
+  }
+  header, header a, header .wordmark{
+    color:var(--cream);
+  }
+  .wordmark{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:19px;
+    letter-spacing:0.01em;
+  }
+  nav{display:flex;gap:28px;}
+  nav a{
+    font-family:var(--mono);
+    font-size:12px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    position:relative;
+    padding-bottom:2px;
+  }
+  nav a.active::after{
+    content:'';
+    position:absolute;
+    left:0;bottom:-4px;
+    width:100%;height:1px;
+    background:currentColor;
+  }
+  .nav-toggle{display:none;}
+
+  /* ---------- PAGES ---------- */
+  .page{display:none;}
+  .page.active{display:block;animation:fadeIn .5s ease both;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+
+  /* ================= PAGE 1: PROJECTS / BIO ================= */
+
+  .hero{
+    display:grid;
+    grid-template-columns:minmax(300px,420px) 1fr;
+    min-height:100vh;
+  }
+  .hero-panel{
+    background:var(--red);
+    color:var(--cream);
+    padding:120px 40px 40px;
+    display:flex;
+    flex-direction:column;
+    justify-content:space-between;
+    position:relative;
+  }
+  .hero-panel .name{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(40px, 5.5vw, 62px);
+    line-height:0.98;
+    letter-spacing:-0.01em;
+  }
+  .hero-panel .tagline{
+    font-family:var(--mono);
+    font-size:12.5px;
+    line-height:1.7;
+    letter-spacing:0.02em;
+    margin-top:22px;
+    max-width:280px;
+    color:#f3cec7;
+  }
+  .hero-links{
+    display:flex;
+    gap:10px;
+    margin-top:40px;
+  }
+  .pill{
+    border:1px solid rgba(245,242,232,0.5);
+    padding:9px 16px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    transition:background .2s ease, color .2s ease;
+  }
+  .pill:hover{background:var(--cream); color:var(--red-dark);}
+
+  .hero-image{
+    background:var(--stone-light) url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="800" height="800"><rect width="800" height="800" fill="%23c9c4b6"/></svg>');
+    background-size:cover;
+    background-position:center;
+    position:relative;
+    overflow:hidden;
+  }
+  .hero-image::after{
+    content:'';
+    position:absolute; inset:0;
+    background:
+      radial-gradient(circle at 30% 25%, #d8cfa0 0%, transparent 45%),
+      radial-gradient(circle at 70% 65%, #b3a888 0%, transparent 50%),
+      linear-gradient(160deg, #ded6bd 0%, #a79d80 100%);
+    mix-blend-mode:multiply;
+    opacity:0.9;
+  }
+  .hero-image .cap{
+    position:absolute;
+    bottom:24px; right:28px;
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.05em;
+    color:rgba(23,20,13,0.55);
+    z-index:2;
+  }
+
+  /* index list — the signature recurring element */
+  .index-section{
+    padding:90px 40px 120px;
+    max-width:1180px;
+    margin:0 auto;
+  }
+  .index-heading{
+    display:flex;
+    justify-content:space-between;
+    align-items:baseline;
+    border-bottom:1px solid var(--ink);
+    padding-bottom:14px;
+    margin-bottom:6px;
+  }
+  .index-heading h2{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:28px;
+  }
+  .index-heading span{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    color:var(--stone);
+    text-transform:uppercase;
+  }
+  .index-row{
+    display:grid;
+    grid-template-columns:56px 1fr auto;
+    gap:24px;
+    align-items:start;
+    padding:26px 0;
+    border-bottom:1px solid rgba(23,20,13,0.12);
+    cursor:default;
+    transition:padding-left .25s ease, background .25s ease;
+  }
+  .index-row:hover{
+    padding-left:10px;
+    background:rgba(198,54,42,0.04);
+  }
+  .index-num{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--stone);
+    padding-top:4px;
+  }
+  .index-main .idx-title{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:23px;
+    margin-bottom:6px;
+  }
+  .index-main .idx-desc{
+    font-family:var(--sans);
+    font-size:14.5px;
+    line-height:1.6;
+    color:#4a4638;
+    max-width:520px;
+  }
+  .index-meta{
+    text-align:right;
+    font-family:var(--mono);
+    font-size:11.5px;
+    color:var(--stone);
+    white-space:nowrap;
+    padding-top:6px;
+  }
+
+  /* bio block */
+  .bio-section{
+    background:var(--ink);
+    color:var(--cream);
+    padding:100px 40px;
+  }
+  .bio-wrap{
+    max-width:1180px;
+    margin:0 auto;
+    display:grid;
+    grid-template-columns:1fr 1.4fr;
+    gap:60px;
+  }
+  .bio-wrap .label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--stone-light);
+  }
+  .bio-wrap h3{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:clamp(26px,3vw,34px);
+    line-height:1.35;
+    margin-top:16px;
+  }
+  .bio-facts{
+    font-family:var(--mono);
+    font-size:12.5px;
+    line-height:2.1;
+    color:#cfc9b8;
+  }
+  .bio-facts strong{color:var(--cream); font-weight:400;}
+
+  /* ================= PAGE 2: WORK / GALLERY ================= */
+  .gallery-head{
+    padding:150px 40px 50px;
+    max-width:1180px;
+    margin:0 auto;
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    border-bottom:1px solid var(--ink);
+  }
+  .gallery-head h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(44px,6vw,72px);
+    line-height:0.95;
+  }
+  .gallery-head .count{
+    font-family:var(--mono);
+    font-size:12px;
+    color:var(--stone);
+    padding-bottom:10px;
+  }
+  .gallery-grid{
+    max-width:1180px;
+    margin:0 auto;
+    padding:50px 40px 140px;
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:38px 28px;
+  }
+  .g-item{display:flex; flex-direction:column;}
+  .g-thumb{
+    aspect-ratio:4/5;
+    position:relative;
+    overflow:hidden;
+    background:var(--stone-light);
+  }
+  .g-thumb::after{
+    content:'';
+    position:absolute; inset:0;
+  }
+  .g-thumb img.tint{ display:none; }
+  .g-item:nth-child(6n+1) .g-thumb{ grid-row: span 1; }
+  .g-item.wide{ grid-column: span 2; }
+  .g-item.wide .g-thumb{ aspect-ratio:16/10; }
+
+  .g-caption{
+    display:flex;
+    justify-content:space-between;
+    padding-top:12px;
+    border-top:1px solid rgba(23,20,13,0.15);
+    margin-top:14px;
+  }
+  .g-caption .g-title{
+    font-family:var(--serif);
+    font-weight:500;
+    font-size:16.5px;
+  }
+  .g-caption .g-meta{
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--stone);
+    text-align:right;
+    line-height:1.6;
+  }
+
+  /* ================= PAGE 3: CONTACT ================= */
+  .contact-wrap{
+    min-height:100vh;
+    background:var(--lime);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:150px 32px 80px;
+  }
+  .contact-card{
+    background:var(--white);
+    width:100%;
+    max-width:760px;
+    box-shadow:14px 14px 0 rgba(23,20,13,0.9);
+  }
+  .contact-top{
+    padding:44px 44px 30px;
+    border-bottom:1px solid rgba(23,20,13,0.12);
+  }
+  .contact-top .eyebrow{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    color:var(--stone);
+  }
+  .contact-top h1{
+    font-family:var(--serif);
+    font-weight:600;
+    font-size:clamp(36px,5vw,52px);
+    margin-top:10px;
+    line-height:1;
+  }
+  .contact-list{padding:10px 44px 8px;}
+  .c-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    padding:22px 0;
+    border-bottom:1px solid rgba(23,20,13,0.1);
+  }
+  .c-row:last-child{border-bottom:none;}
+  .c-row .c-label{
+    font-family:var(--mono);
+    font-size:11px;
+    letter-spacing:0.06em;
+    text-transform:uppercase;
+    color:var(--stone);
+  }
+  .c-row .c-value{
+    font-family:var(--serif);
+    font-size:19px;
+    font-weight:500;
+  }
+  .c-row a.c-value:hover{color:var(--red);}
+  .contact-bottom{
+    padding:30px 44px 44px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:var(--mono);
+    font-size:10.5px;
+    color:var(--stone);
+  }
+  .plus-badge{
+    width:34px;height:34px;
+    border:1px solid var(--ink);
+    display:flex;align-items:center;justify-content:center;
+    font-family:var(--mono);
+    font-size:16px;
+  }
+
+  footer.sitefoot{
+    background:var(--ink);
+    color:var(--stone-light);
+    font-family:var(--mono);
+    font-size:10.5px;
+    letter-spacing:0.04em;
+    text-align:center;
+    padding:22px;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    .hero{grid-template-columns:1fr;}
+    .hero-image{min-height:60vh;}
+    .hero-panel{padding:120px 24px 40px;}
+    .index-section{padding:70px 22px 90px;}
+    .index-row{grid-template-columns:32px 1fr; row-gap:10px;}
+    .index-meta{grid-column:2; text-align:left; padding-top:0;}
+    .bio-wrap{grid-template-columns:1fr; gap:28px;}
+    .bio-section{padding:70px 24px;}
+    .gallery-head{padding:130px 22px 34px; flex-direction:column; align-items:flex-start; gap:10px;}
+    .gallery-grid{grid-template-columns:repeat(2,1fr); padding:34px 22px 90px; gap:26px 18px;}
+    .g-item.wide{grid-column:span 2;}
+    .contact-card{box-shadow:8px 8px 0 rgba(23,20,13,0.9);}
+    .contact-top, .contact-list, .contact-bottom{padding-left:26px; padding-right:26px;}
+    nav{gap:16px;}
+    header{padding:18px 20px;}
+  }
+  @media (max-width:520px){
+    .gallery-grid{grid-template-columns:1fr;}
+    .g-item.wide{grid-column:span 1;}
+    nav a{font-size:10.5px;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <a href="#projects" class="wordmark" data-page="projects">Wren Halloran</a>
+  <nav>
+    <a href="#projects" data-page="projects" class="active">Projects</a>
+    <a href="#work" data-page="work">Work</a>
+    <a href="#contact" data-page="contact">Contact</a>
+  </nav>
+</header>
+
+<!-- ================= PAGE 1 — PROJECTS + BIO ================= -->
+<section class="page active" id="page-projects">
+
+  <div class="hero">
+    <div class="hero-panel">
+      <div>
+        <div class="name">Wren<br>Halloran</div>
+        <div class="tagline">Working in stoneware and single-channel video, based in the Hudson Valley. Interested in the hand-made object next to the recorded moment — what a body leaves behind either way.</div>
+      </div>
+      <div class="hero-links">
+        <a class="pill" href="#work" data-page="work">View Work</a>
+        <a class="pill" href="#contact" data-page="contact">Inquire</a>
+      </div>
+    </div>
+    <div class="hero-image">
+      <div class="cap">Studio, Kingston NY — 2026</div>
+    </div>
+  </div>
+
+  <div class="index-section">
+    <div class="index-heading">
+      <h2>Past Projects</h2>
+      <span>2021 — 2026</span>
+    </div>
+
+    <div class="index-row">
+      <div class="index-num">01</div>
+      <div class="index-main">
+        <div class="idx-title">Low Water</div>
+        <div class="idx-desc">A solo show of thrown and hand-built stoneware paired with a looping video shot along the Esopus Creek through a season of drought.</div>
+      </div>
+      <div class="index-meta">Solo Exhibition<br>Foundry Gallery, Kingston<br>2026</div>
+    </div>
+
+    <div class="index-row">
+      <div class="index-num">02</div>
+      <div class="index-main">
+        <div class="idx-title">Threshold Studies</div>
+        <div class="idx-desc">A year-long series of small vessels made at doorways, windowsills, and other in-between places, shown with a three-channel video installation.</div>
+      </div>
+      <div class="index-meta">Group Show<br>Northern Light Collective<br>2025</div>
+    </div>
+
+    <div class="index-row">
+      <div class="index-num">03</div>
+      <div class="index-main">
+        <div class="idx-title">Held Weather</div>
+        <div class="idx-desc">Six-week studio residency resulting in a body of glazed forms and a single-channel video responding to storm systems tracked over the residency.</div>
+      </div>
+      <div class="index-meta">Residency<br>Hillside Art Trust<br>2024</div>
+    </div>
+
+    <div class="index-row">
+      <div class="index-num">04</div>
+      <div class="index-main">
+        <div class="idx-title">Undertow</div>
+        <div class="idx-desc">A two-person exhibition pairing unglazed ceramic forms with tidal footage, developed alongside video artist Marisol Feng.</div>
+      </div>
+      <div class="index-meta">Two-Person Show<br>Salt Room Projects<br>2022</div>
+    </div>
+
+  </div>
+
+  <div class="bio-section">
+    <div class="bio-wrap">
+      <div>
+        <div class="label">Bio</div>
+        <div class="bio-facts" style="margin-top:20px;">
+          <div><strong>Based</strong> — Hudson Valley, NY</div>
+          <div><strong>Medium</strong> — Stoneware, single-channel video</div>
+          <div><strong>Practice since</strong> — 2016</div>
+          <div><strong>Represented by</strong> — Foundry Gallery</div>
+        </div>
+      </div>
+      <div>
+        <h3>Wren Halloran works between the kiln and the camera — a thrown or hand-built form on one side, a fixed shot held past the point of comfort on the other. Trained first as a potter, the video work keeps a potter's patience: long durations, small changes, attention paid to something most people stop watching too soon.</h3>
+      </div>
+    </div>
+  </div>
+
+</section>
+
+<!-- ================= PAGE 2 — WORK / GALLERY ================= -->
+<section class="page" id="page-work">
+
+  <div class="gallery-head">
+    <h1>Work</h1>
+    <div class="count">24 pieces — 2021–2026</div>
+  </div>
+
+  <div class="gallery-grid" id="gallery-grid"></div>
+
+</section>
+
+<!-- ================= PAGE 3 — CONTACT ================= -->
+<section class="page" id="page-contact">
+  <div class="contact-wrap">
+    <div class="contact-card">
+      <div class="contact-top">
+        <div class="eyebrow">Get in touch</div>
+        <h1>Say hello.</h1>
+      </div>
+      <div class="contact-list">
+        <div class="c-row">
+          <div class="c-label">Email</div>
+          <a class="c-value" href="mailto:wren@wrenhallorran.art">wren@wrenhalloran.art</a>
+        </div>
+        <div class="c-row">
+          <div class="c-label">Instagram</div>
+          <a class="c-value" href="#" target="_blank">@wren.paints</a>
+        </div>
+        <div class="c-row">
+          <div class="c-label">Studio</div>
+          <div class="c-value">Kingston, NY — by appointment</div>
+        </div>
+        <div class="c-row">
+          <div class="c-label">Mailing list</div>
+          <a class="c-value" href="#">Join for show dates</a>
+        </div>
+      </div>
+      <div class="contact-bottom">
+        <span>Wren Halloran © 2026</span>
+        <div class="plus-badge">+</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="sitefoot">Site built with care — Kingston, NY</footer>
+
+<script>
+  // ---- Gallery data (placeholder pieces — swap in real images + titles) ----
+  const pieces = [
+    {t:"Low Water No. 3", m:"Stoneware, ash glaze — 14 × 9 in", y:"2026", wide:true, c1:"#c98a6a", c2:"#5c7a6b", video:false},
+    {t:"Riverbed", m:"Single-channel video — 6:12", y:"2026", c1:"#b3a888", c2:"#3f4a3d", video:true},
+    {t:"Threshold, June", m:"Hand-built stoneware — 8 × 6 in", y:"2025", c1:"#d8cfa0", c2:"#a04b3a", video:false},
+    {t:"Held Weather I", m:"Wood-fired stoneware — 11 × 7 in", y:"2024", c1:"#8c9a7a", c2:"#2c2b26", video:false},
+    {t:"Storm Track", m:"Video, 3-channel installation — 14:00 loop", y:"2024", c1:"#c6362a", c2:"#e9dfc4", wide:true, video:true},
+    {t:"Undertow", m:"Unglazed stoneware — 16 × 10 in", y:"2022", c1:"#5b7d92", c2:"#dccfa8", video:false},
+    {t:"Doorway Study II", m:"Single-channel video — 4:47", y:"2025", c1:"#cbdb2a", c2:"#3a3626", video:true},
+    {t:"Low Water No. 7", m:"Stoneware, ash glaze — 9 × 9 in", y:"2026", c1:"#a3775a", c2:"#e7e0cc", video:false},
+    {t:"Salt Room", m:"Single-channel video — 8:03", y:"2022", c1:"#94897a", c2:"#26241c", video:true},
+  ];
+
+  const grid = document.getElementById('gallery-grid');
+  pieces.forEach((p,i)=>{
+    const item = document.createElement('div');
+    item.className = 'g-item' + (p.wide ? ' wide' : '');
+    const playIcon = p.video ? `
+      <div style="position:absolute; top:14px; left:14px; width:30px; height:30px; border:1px solid rgba(245,242,232,0.8); border-radius:50%; display:flex; align-items:center; justify-content:center; backdrop-filter:blur(2px);">
+        <div style="width:0; height:0; border-top:5px solid transparent; border-bottom:5px solid transparent; border-left:8px solid #F5F2E8; margin-left:2px;"></div>
+      </div>` : '';
+    item.innerHTML = `
+      <div class="g-thumb" style="background:linear-gradient(135deg, ${p.c1} 0%, ${p.c2} 100%);">${playIcon}</div>
+      <div class="g-caption">
+        <div class="g-title">${p.t}${p.video ? ' <span style=\"font-family:var(--mono); font-size:10px; color:var(--stone); font-weight:400;\">(still)</span>' : ''}</div>
+        <div class="g-meta">No. ${String(i+1).padStart(2,'0')}<br>${p.m}<br>${p.y}</div>
+      </div>
+    `;
+    grid.appendChild(item);
+  });
+
+  // ---- Page routing ----
+  const pages = {
+    projects: document.getElementById('page-projects'),
+    work: document.getElementById('page-work'),
+    contact: document.getElementById('page-contact'),
+  };
+  const navLinks = document.querySelectorAll('[data-page]');
+
+  function showPage(name){
+    if(!pages[name]) name = 'projects';
+    Object.entries(pages).forEach(([k,el])=> el.classList.toggle('active', k===name));
+    document.querySelectorAll('nav a').forEach(a=>{
+      a.classList.toggle('active', a.dataset.page === name);
+    });
+    window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+  }
+
+  navLinks.forEach(link=>{
+    link.addEventListener('click', (e)=>{
+      e.preventDefault();
+      const name = link.dataset.page;
+      history.pushState(null, '', '#'+name);
+      showPage(name);
+    });
+  });
+
+  window.addEventListener('popstate', ()=>{
+    showPage(location.hash.replace('#','') || 'projects');
+  });
+
+  showPage(location.hash.replace('#','') || 'projects');
+</script>
+
+</body>
+</html>

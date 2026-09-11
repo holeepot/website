@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta 
+        property="og:url" 
+        content="https://lucasleeho.com"
+        />
+        <meta 
+        content="Lucas Lee Ho"
+        property="og:title"/>
+        <meta 
+        content="website"
+        property="og:type" 
+        />
+        <meta 
+        content="/Users/lucasho/Documents/Coding/25-11-08_Dinner/lucas dinner -5893.jpg" 
+        property="og:image"
+        />
+        <title>Lucas Lee Ho Website</title>
+    </head>
+    <body>
+        <h1>Lucas Lee Ho</h1>
+        <image src="/Users/lucasho/Documents/Coding/25-11-08_Dinner/lucas dinner -5893.jpg" alt="profilepic"> </image>
+         <p>I'm a ceramic artist based in Chicago. My work is focused on the social aspect of ceramics. Send me a message! holucaslee@gmail.com</p>
+    </body>
+</html>
